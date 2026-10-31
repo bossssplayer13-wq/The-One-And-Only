@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    
+    <!-- Load the official Google API library -->
+    <script src="https://google.com" async defer></script>
+
+    <style>
+        /* Standalone dark theme styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: linear-gradient(#031757, #033157);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            width: 350px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            -webkit-text-stroke: 1px #000;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        p {
+            color: #c9c7c7;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h1>Access Hub</h1>
+        <p>Please sign in with Google to enter the game site.</p>
+        
+        <!-- Google button will appear right here -->
+        <div class="btn-wrapper">
+            <div id="google-login-button"></div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: "YOUR_GOOGLE_CLIENT_ID_HERE", // Replace with your actual Google Client ID
+                callback: handleCredentialResponse
+            });
+
+            google.accounts.id.renderButton(
+                document.getElementById("google-login-button"),
+                { theme: "dark", size: "large", type: "standard", shape: "pill" }
+            );
+        };
+
+        function handleCredentialResponse(response) {
+            const responsePayload = decodeJwt(response.credential);
+
+            // 1. Save their name and profile picture to the browser's temporary memory
+            localStorage.setItem("userLoggedIn", "true");
+            localStorage.setItem("userName", responsePayload.given_name);
+            localStorage.setItem("userPic", responsePayload.picture);
+
+            // 2. Automatically redirect them to your main dashboard page
+            window.location.href = "index.html"; 
+        }
+
+        // Helper function to decode user details safely
+        function decodeJwt(token) {
+            var base64Url = token.split('.');
+            var base64 = base64Url[0].replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+    </script>
+</body>
+</html>
