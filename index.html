@@ -9,23 +9,25 @@
             color: #c9c7c7; 
             padding: 40px;
             text-align: center;
+            .subt {
+                font-size: 24;
+            }
+            .maint {
+                font-size: 48;
+            }
         }
-        /* Blends from Purple to Coral, top to bottom */
-body {
-    background-image: linear-gradient(#031757, #033157);
-    background-attachment: fixed; /* Keeps the background from stretching or resetting if you scroll */
-    min-height: 100vh; /* Ensures the background covers the full screen height */
-}
-
-/* Moving left to right at a 45-degree angle */
-.card {
-    background-image: linear-gradient(45deg, #031757, #033157);
-}
-
+        body {
+            background-image: linear-gradient(#031757, #033157);
+            background-attachment: fixed; 
+            min-height: 100vh; 
+        }
+        .card {
+            background-image: linear-gradient(45deg, #031757, #033157);
+        }
     </style>
 </head>
 <body>
-    <h1>The One And Only</h1>
-    <h2>Advanced Game Site</h2>
+    <h1 class="maint">The One And Only</h1>
+    <p class="subt">Advanced Game Site</p>
 </body>
 </html>
