@@ -1,2 +1,9 @@
 # The-One-And-Only
-Proxy
+Name Idea:
+
+
+Vernos
+
+Atnos
+
+Cog
